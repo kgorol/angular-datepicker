@@ -5,8 +5,10 @@
     {
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["tsconfig.lib.json", "tsconfig.spec.json"],
-        "tsconfigRootDir": "projects/ng2-date-picker",
+        "project": [
+          "projects/ng2-date-picker/tsconfig.lib.json",
+          "projects/ng2-date-picker/tsconfig.spec.json"
+        ],
         "createDefaultProgram": true
       },
       "rules": {
