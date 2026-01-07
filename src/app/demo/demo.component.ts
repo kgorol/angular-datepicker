@@ -13,18 +13,20 @@ import {
   UntypedFormControl,
   UntypedFormGroup,
   Validators,
+  FormsModule,
 } from '@angular/forms';
 import dayjs, { Dayjs } from 'dayjs';
 import { GaService } from './common/services/ga/ga.service';
 import { ECalendarValue } from '../../../projects/ng2-date-picker/src/lib/common/types/calendar-value-enum';
 import { INavEvent } from '../../../projects/ng2-date-picker/src/lib/common/models/navigation-event.model';
 import { ISelectionEvent } from '../../../projects/ng2-date-picker/src/lib/common/types/selection-event.model';
+import { RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'dp-demo',
   templateUrl: './demo.component.html',
   styleUrls: ['./demo.component.less'],
-  standalone: false,
+  imports: [RouterLinkActive, RouterLink, FormsModule, RouterOutlet],
 })
 export class DemoComponent implements OnInit {
   private readonly gaService = inject(GaService);

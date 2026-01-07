@@ -14,7 +14,6 @@ import {
   styleUrls: ['./calendar-nav.component.less'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
 })
 export class CalendarNavComponent {
   @Input() label: string;

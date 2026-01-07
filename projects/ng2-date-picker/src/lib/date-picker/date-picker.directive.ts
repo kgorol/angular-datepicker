@@ -25,7 +25,6 @@ import { Dayjs } from 'dayjs';
 @Directive({
   exportAs: 'dpDayPicker',
   selector: '[dpDayPicker]',
-  standalone: false,
 })
 export class DatePickerDirective implements OnInit {
   readonly viewContainerRef = inject(ViewContainerRef);

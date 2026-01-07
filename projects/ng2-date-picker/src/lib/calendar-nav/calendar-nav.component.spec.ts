@@ -8,7 +8,7 @@ describe('CalendarNavComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CalendarNavComponent],
+      imports: [CalendarNavComponent],
     }).compileComponents();
   }));
 

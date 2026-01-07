@@ -32,6 +32,7 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors,
   Validator,
+  FormsModule,
 } from '@angular/forms';
 import { CalendarValue } from '../common/types/calendar-value';
 import { UtilsService } from '../common/services/utils/utils.service';
@@ -40,6 +41,9 @@ import { IMonth } from '../month-calendar/month.model';
 import { DateValidator } from '../common/types/validator.type';
 import { INavEvent } from '../common/models/navigation-event.model';
 import { dayjsRef } from '../common/dayjs/dayjs.ref';
+import { CalendarNavComponent } from '../calendar-nav/calendar-nav.component';
+import { NgClass } from '@angular/common';
+import { MonthCalendarComponent } from '../month-calendar/month-calendar.component';
 
 @Component({
   selector: 'dp-day-calendar',
@@ -60,7 +64,7 @@ import { dayjsRef } from '../common/dayjs/dayjs.ref';
       multi: true,
     },
   ],
-  standalone: false,
+  imports: [CalendarNavComponent, NgClass, FormsModule, MonthCalendarComponent],
 })
 export class DayCalendarComponent
   implements OnInit, OnChanges, ControlValueAccessor, Validator

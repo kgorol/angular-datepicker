@@ -12,7 +12,7 @@ describe('Component: TimeSelectComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         TimeSelectComponent,
         CalendarNavComponent,
         MonthCalendarComponent,

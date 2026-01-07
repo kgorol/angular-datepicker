@@ -57,7 +57,6 @@ import { dayjsRef } from '../common/dayjs/dayjs.ref';
       multi: true,
     },
   ],
-  standalone: false,
 })
 export class TimeSelectComponent
   implements OnInit, OnChanges, ControlValueAccessor, Validator

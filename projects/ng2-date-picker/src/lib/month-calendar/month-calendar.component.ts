@@ -37,6 +37,8 @@ import { SingleCalendarValue } from '../common/types/single-calendar-value';
 import { INavEvent } from '../common/models/navigation-event.model';
 import { Dayjs } from 'dayjs';
 import { dayjsRef } from '../common/dayjs/dayjs.ref';
+import { CalendarNavComponent } from '../calendar-nav/calendar-nav.component';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'dp-month-calendar',
@@ -57,7 +59,7 @@ import { dayjsRef } from '../common/dayjs/dayjs.ref';
       multi: true,
     },
   ],
-  standalone: false,
+  imports: [CalendarNavComponent, NgClass],
 })
 export class MonthCalendarComponent
   implements OnInit, OnChanges, ControlValueAccessor, Validator

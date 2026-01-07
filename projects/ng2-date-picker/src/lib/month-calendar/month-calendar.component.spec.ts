@@ -12,7 +12,7 @@ describe('Component: MonthCalendarComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [MonthCalendarComponent, CalendarNavComponent],
+      imports: [MonthCalendarComponent, CalendarNavComponent],
       providers: [MonthCalendarService, UtilsService],
     }).compileComponents();
   }));

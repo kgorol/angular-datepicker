@@ -1,10 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import {
+  UntypedFormControl,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import {
   ECalendarValue,
   IDatePickerConfig,
 } from '../../../../projects/ng2-date-picker/src/public-api';
 import dayjs, { Dayjs } from 'dayjs';
+import { DatePickerComponent } from '../../../../projects/ng2-date-picker/src/lib/date-picker/date-picker.component';
 
 const GLOBAL_OPTION_KEYS = [
   'theme',
@@ -105,7 +110,7 @@ const DAY_TIME_CALENDAR_OPTION_KEYS = [
   selector: 'dp-config-form',
   templateUrl: './config-form.component.html',
   styleUrls: ['./config-form.component.less'],
-  standalone: false,
+  imports: [FormsModule, ReactiveFormsModule, DatePickerComponent],
 })
 export class ConfigFormComponent implements OnInit {
   readonly DAYS = ['su', 'mo', 'tu', 'we', 'th', 'fr', 'sa'];

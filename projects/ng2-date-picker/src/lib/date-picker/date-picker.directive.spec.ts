@@ -9,10 +9,7 @@ import {
 import { inject, TestBed } from '@angular/core/testing';
 import { NgControl } from '@angular/forms';
 
-@Component({
-  template: '',
-  standalone: false,
-})
+@Component({ template: '' })
 class TestComponent {}
 
 describe('Directive: DpDayPicker', () => {
@@ -20,7 +17,7 @@ describe('Directive: DpDayPicker', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TestComponent],
+      imports: [TestComponent],
       providers: [
         DatePickerDirective,
         UtilsService,

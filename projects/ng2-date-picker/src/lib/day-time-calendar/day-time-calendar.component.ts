@@ -23,6 +23,7 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors,
   Validator,
+  FormsModule,
 } from '@angular/forms';
 import { Dayjs } from 'dayjs';
 import { CalendarValue } from '../common/types/calendar-value';
@@ -38,6 +39,7 @@ import { DayTimeCalendarService } from './day-time-calendar.service';
 import { DateValidator } from '../common/types/validator.type';
 import { DayCalendarComponent } from '../day-calendar/day-calendar.component';
 import { INavEvent } from '../common/models/navigation-event.model';
+import { TimeSelectComponent } from '../time-select/time-select.component';
 
 @Component({
   selector: 'dp-day-time-calendar',
@@ -60,7 +62,7 @@ import { INavEvent } from '../common/models/navigation-event.model';
       multi: true,
     },
   ],
-  standalone: false,
+  imports: [DayCalendarComponent, FormsModule, TimeSelectComponent],
 })
 export class DayTimeCalendarComponent
   implements OnInit, OnChanges, ControlValueAccessor, Validator

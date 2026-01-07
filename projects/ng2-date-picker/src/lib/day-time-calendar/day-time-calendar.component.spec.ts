@@ -16,8 +16,8 @@ describe('Component: DayTimeCalendarComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule],
-      declarations: [
+      imports: [
+        FormsModule,
         DayTimeCalendarComponent,
         DayCalendarComponent,
         TimeSelectComponent,

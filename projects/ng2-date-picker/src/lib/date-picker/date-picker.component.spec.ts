@@ -26,8 +26,9 @@ describe('Component: DatePickerComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, OverlayModule],
-      declarations: [
+      imports: [
+        FormsModule,
+        OverlayModule,
         DatePickerComponent,
         DayTimeCalendarComponent,
         DayCalendarComponent,

@@ -16,8 +16,8 @@ describe('Component: DayCalendarComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule],
-      declarations: [
+      imports: [
+        FormsModule,
         DayCalendarComponent,
         CalendarNavComponent,
         MonthCalendarComponent,

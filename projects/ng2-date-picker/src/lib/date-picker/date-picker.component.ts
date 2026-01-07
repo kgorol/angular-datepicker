@@ -46,6 +46,7 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors,
   Validator,
+  FormsModule,
 } from '@angular/forms';
 
 import { DateValidator } from '../common/types/validator.type';
@@ -56,7 +57,11 @@ import { SelectEvent } from '../common/types/selection-event.enum';
 import { ISelectionEvent } from '../common/types/selection-event.model';
 import { Dayjs, UnitType } from 'dayjs';
 import { dayjsRef } from '../common/dayjs/dayjs.ref';
-import { ConnectionPositionPair } from '@angular/cdk/overlay';
+import {
+  ConnectionPositionPair,
+  CdkConnectedOverlay,
+} from '@angular/cdk/overlay';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'dp-date-picker',
@@ -80,7 +85,15 @@ import { ConnectionPositionPair } from '@angular/cdk/overlay';
       multi: true,
     },
   ],
-  standalone: false,
+  imports: [
+    NgClass,
+    FormsModule,
+    CdkConnectedOverlay,
+    DayCalendarComponent,
+    MonthCalendarComponent,
+    TimeSelectComponent,
+    DayTimeCalendarComponent,
+  ],
 })
 export class DatePickerComponent
   implements OnChanges, OnInit, ControlValueAccessor, Validator, OnDestroy
