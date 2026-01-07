@@ -1,5 +1,5 @@
-import {ECalendarValue} from '../common/types/calendar-value-enum';
-import {SingleCalendarValue} from '../common/types/single-calendar-value';
+import { ECalendarValue } from '../common/types/calendar-value-enum';
+import { SingleCalendarValue } from '../common/types/single-calendar-value';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -14,7 +14,7 @@ import {
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
-  inject
+  inject,
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -22,48 +22,54 @@ import {
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
-  Validator
+  Validator,
+  FormsModule,
 } from '@angular/forms';
-import {Dayjs} from 'dayjs';
-import {CalendarValue} from '../common/types/calendar-value';
-import {UtilsService} from '../common/services/utils/utils.service';
-import {IDate} from '../common/models/date.model';
-import {DayCalendarService} from '../day-calendar/day-calendar.service';
-import {TimeSelectService} from '../time-select/time-select.service';
-import {IDayTimeCalendarConfig, IDayTimeCalendarConfigInternal} from './day-time-calendar-config.model';
-import {DayTimeCalendarService} from './day-time-calendar.service';
-import {DateValidator} from '../common/types/validator.type';
-import {DayCalendarComponent} from '../day-calendar/day-calendar.component';
-import {INavEvent} from '../common/models/navigation-event.model';
+import { Dayjs } from 'dayjs';
+import { CalendarValue } from '../common/types/calendar-value';
+import { UtilsService } from '../common/services/utils/utils.service';
+import { IDate } from '../common/models/date.model';
+import { DayCalendarService } from '../day-calendar/day-calendar.service';
+import { TimeSelectService } from '../time-select/time-select.service';
+import {
+  IDayTimeCalendarConfig,
+  IDayTimeCalendarConfigInternal,
+} from './day-time-calendar-config.model';
+import { DayTimeCalendarService } from './day-time-calendar.service';
+import { DateValidator } from '../common/types/validator.type';
+import { DayCalendarComponent } from '../day-calendar/day-calendar.component';
+import { INavEvent } from '../common/models/navigation-event.model';
+import { TimeSelectComponent } from '../time-select/time-select.component';
 
 @Component({
-    selector: 'dp-day-time-calendar',
-    templateUrl: 'day-time-calendar.component.html',
-    styleUrls: ['day-time-calendar.component.less'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    providers: [
-        DayTimeCalendarService,
-        DayCalendarService,
-        TimeSelectService,
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => DayTimeCalendarComponent),
-            multi: true
-        },
-        {
-            provide: NG_VALIDATORS,
-            useExisting: forwardRef(() => DayTimeCalendarComponent),
-            multi: true
-        }
-    ],
-    standalone: false
+  selector: 'dp-day-time-calendar',
+  templateUrl: 'day-time-calendar.component.html',
+  styleUrls: ['day-time-calendar.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
+  providers: [
+    DayTimeCalendarService,
+    DayCalendarService,
+    TimeSelectService,
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DayTimeCalendarComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => DayTimeCalendarComponent),
+      multi: true,
+    },
+  ],
+  imports: [DayCalendarComponent, FormsModule, TimeSelectComponent],
 })
-export class DayTimeCalendarComponent implements OnInit, OnChanges, ControlValueAccessor, Validator {
+export class DayTimeCalendarComponent
+  implements OnInit, OnChanges, ControlValueAccessor, Validator
+{
   dayTimeCalendarService = inject(DayTimeCalendarService);
   utilsService = inject(UtilsService);
   cd = inject(ChangeDetectorRef);
-
 
   @Input() config: IDayTimeCalendarConfig;
   @Input() displayDate: SingleCalendarValue;
@@ -81,7 +87,7 @@ export class DayTimeCalendarComponent implements OnInit, OnChanges, ControlValue
   inputValueType: ECalendarValue;
   validateFn: DateValidator;
   api = {
-    moveCalendarTo: this.moveCalendarTo.bind(this)
+    moveCalendarTo: this.moveCalendarTo.bind(this),
   };
 
   _selected: Dayjs;
@@ -94,8 +100,6 @@ export class DayTimeCalendarComponent implements OnInit, OnChanges, ControlValue
     this._selected = selected;
     this.onChangeCallback(this.processOnChangeCallback(selected));
   }
-  ;
-
   ngOnInit() {
     this.isInited = true;
     this.init();
@@ -104,12 +108,15 @@ export class DayTimeCalendarComponent implements OnInit, OnChanges, ControlValue
 
   init() {
     this.componentConfig = this.dayTimeCalendarService.getConfig(this.config);
-    this.inputValueType = this.utilsService.getInputType(this.inputValue, false);
+    this.inputValueType = this.utilsService.getInputType(
+      this.inputValue,
+      false,
+    );
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.isInited) {
-      const {minDate, maxDate} = changes;
+      const { minDate, maxDate } = changes;
       this.init();
 
       if (minDate || maxDate) {
@@ -122,13 +129,14 @@ export class DayTimeCalendarComponent implements OnInit, OnChanges, ControlValue
     this.inputValue = value;
 
     if (value) {
-      this.selected = this.utilsService
-        .convertToDayjsArray(value, {
-          format: this.componentConfig.format,
-          allowMultiSelect: false
-        })[0];
-      this.inputValueType = this.utilsService
-        .getInputType(this.inputValue, false);
+      this.selected = this.utilsService.convertToDayjsArray(value, {
+        format: this.componentConfig.format,
+        allowMultiSelect: false,
+      })[0];
+      this.inputValueType = this.utilsService.getInputType(
+        this.inputValue,
+        false,
+      );
     } else {
       this.selected = null;
     }
@@ -140,11 +148,9 @@ export class DayTimeCalendarComponent implements OnInit, OnChanges, ControlValue
     this.onChangeCallback = fn;
   }
 
-  onChangeCallback(_: any) {
-  }
+  onChangeCallback(_: any) {}
 
-  registerOnTouched(fn: any): void {
-  }
+  registerOnTouched(fn: any): void {}
 
   validate(formControl: UntypedFormControl): ValidationErrors | any {
     if (this.minDate || this.maxDate) {
@@ -158,7 +164,7 @@ export class DayTimeCalendarComponent implements OnInit, OnChanges, ControlValue
     return this.utilsService.convertFromDayjsArray(
       this.componentConfig.format,
       [value],
-      this.componentConfig.returnedValueType || this.inputValueType
+      this.componentConfig.returnedValueType || this.inputValueType,
     );
   }
 
@@ -166,24 +172,34 @@ export class DayTimeCalendarComponent implements OnInit, OnChanges, ControlValue
     this.validateFn = this.utilsService.createValidator(
       {
         minDate: this.minDate,
-        maxDate: this.maxDate
-      }, undefined, 'daytime');
+        maxDate: this.maxDate,
+      },
+      undefined,
+      'daytime',
+    );
 
     this.onChangeCallback(this.processOnChangeCallback(this.selected));
   }
 
   dateSelected(day: IDate) {
-    this.selected = this.dayTimeCalendarService.updateDay(this.selected, day.date, this.componentConfig);
+    this.selected = this.dayTimeCalendarService.updateDay(
+      this.selected,
+      day.date,
+      this.componentConfig,
+    );
     this.emitChange();
   }
 
   timeChange(time: IDate) {
-    this.selected = this.dayTimeCalendarService.updateTime(this.selected, time.date);
+    this.selected = this.dayTimeCalendarService.updateTime(
+      this.selected,
+      time.date,
+    );
     this.emitChange();
   }
 
   emitChange() {
-    this.onChange.emit({date: this.selected, selected: false});
+    this.onChange.emit({ date: this.selected, selected: false });
   }
 
   moveCalendarTo(to: SingleCalendarValue) {

@@ -1,11 +1,9 @@
 import { Locator, Page } from '@playwright/test';
 
 export class DemoPage {
-
   private popupSelector = '.dp-popup.dp-main';
 
-  constructor(private page: Page) {
-  }
+  constructor(private page: Page) {}
 
   dayPickerInput(): Locator {
     return this.page.locator('#picker input');
@@ -48,7 +46,9 @@ export class DemoPage {
   }
 
   dayCalendarContainer(): Locator {
-    return this.page.locator(`${this.popupSelector} dp-day-calendar .dp-day-calendar-container`);
+    return this.page.locator(
+      `${this.popupSelector} dp-day-calendar .dp-day-calendar-container`,
+    );
   }
 
   monthPickerInput(): Locator {
@@ -64,7 +64,9 @@ export class DemoPage {
   }
 
   selectedDays(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-calendar-day.dp-selected`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-calendar-day.dp-selected`,
+    );
   }
 
   selectedDay(): Locator {
@@ -80,19 +82,27 @@ export class DemoPage {
   }
 
   dayCalendarLeftSecondaryNavBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-calendar-secondary-nav-left`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-calendar-secondary-nav-left`,
+    );
   }
 
   dayCalendarRightSecondaryNavBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-calendar-secondary-nav-right`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-calendar-secondary-nav-right`,
+    );
   }
 
   monthCalendarLeftNavBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} dp-month-calendar .dp-calendar-nav-left`);
+    return this.page.locator(
+      `${this.popupSelector} dp-month-calendar .dp-calendar-nav-left`,
+    );
   }
 
   monthCalendarRightNavBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} dp-month-calendar .dp-calendar-nav-right`);
+    return this.page.locator(
+      `${this.popupSelector} dp-month-calendar .dp-calendar-nav-right`,
+    );
   }
 
   weekDayNames(): Locator {
@@ -148,7 +158,9 @@ export class DemoPage {
   }
 
   deyCalendarMonthNavHeader(): Locator {
-    return this.page.locator(`${this.popupSelector} dp-month-calendar .dp-nav-header button`);
+    return this.page.locator(
+      `${this.popupSelector} dp-month-calendar .dp-nav-header button`,
+    );
   }
 
   dayTimeCalendarNavHeaderBtnInline(): Locator {
@@ -168,11 +180,15 @@ export class DemoPage {
   }
 
   dayCalendarNavMonthHeaderBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} dp-month-calendar .dp-nav-header-btn`);
+    return this.page.locator(
+      `${this.popupSelector} dp-month-calendar .dp-nav-header-btn`,
+    );
   }
 
   calendarDisabledDays(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-calendar-day[disabled]`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-calendar-day[disabled]`,
+    );
   }
 
   calendarFirstDayOfMonth(): Locator {
@@ -180,7 +196,9 @@ export class DemoPage {
   }
 
   calendarFirstMonthOfYear(): Locator {
-    return this.page.locator(`${this.popupSelector} dp-month-calendar .dp-calendar-month`);
+    return this.page.locator(
+      `${this.popupSelector} dp-month-calendar .dp-calendar-month`,
+    );
   }
 
   calendarFirstMonthOfYearInline(): Locator {
@@ -188,7 +206,9 @@ export class DemoPage {
   }
 
   currentMonthCalendarBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} dp-month-calendar .dp-current-month`);
+    return this.page.locator(
+      `${this.popupSelector} dp-month-calendar .dp-current-month`,
+    );
   }
 
   disableMonthSelector(): Locator {
@@ -380,51 +400,75 @@ export class DemoPage {
   }
 
   hourUpBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-control-hours > .dp-time-select-control-up`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-control-hours > .dp-time-select-control-up`,
+    );
   }
 
   hourDownBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-control-hours > .dp-time-select-control-down`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-control-hours > .dp-time-select-control-down`,
+    );
   }
 
   hourDisplay(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-display-hours`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-display-hours`,
+    );
   }
 
   minuteUpBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-control-minutes > .dp-time-select-control-up`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-control-minutes > .dp-time-select-control-up`,
+    );
   }
 
   minuteDownBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-control-minutes > .dp-time-select-control-down`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-control-minutes > .dp-time-select-control-down`,
+    );
   }
 
   minuteDisplay(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-display-minutes`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-display-minutes`,
+    );
   }
 
   secondUpBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-control-seconds > .dp-time-select-control-up`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-control-seconds > .dp-time-select-control-up`,
+    );
   }
 
   secondDownBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-control-seconds > .dp-time-select-control-down`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-control-seconds > .dp-time-select-control-down`,
+    );
   }
 
   secondDisplay(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-display-seconds`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-display-seconds`,
+    );
   }
 
   meridiemUpBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-control-meridiem > .dp-time-select-control-up`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-control-meridiem > .dp-time-select-control-up`,
+    );
   }
 
   meridiemDownBtn(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-control-meridiem > .dp-time-select-control-down`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-control-meridiem > .dp-time-select-control-down`,
+    );
   }
 
   meridiemDisplay(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-display-meridiem`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-display-meridiem`,
+    );
   }
 
   meridiemDisplayInline(): Locator {
@@ -432,7 +476,9 @@ export class DemoPage {
   }
 
   timeSeparatorDisplay(): Locator {
-    return this.page.locator(`${this.popupSelector} .dp-time-select-separator:nth-child(2)`);
+    return this.page.locator(
+      `${this.popupSelector} .dp-time-select-separator:nth-child(2)`,
+    );
   }
 
   monthRows(): Locator {
@@ -512,7 +558,9 @@ export class DemoPage {
   }
 
   async clickOnDayButton(text: string): Promise<void> {
-    await this.page.locator(`${this.popupSelector} .dp-calendar-day:has-text("${text}")`).click();
+    await this.page
+      .locator(`${this.popupSelector} .dp-calendar-day:has-text("${text}")`)
+      .click();
   }
 
   localeSelect(): Locator {
@@ -524,7 +572,9 @@ export class DemoPage {
   }
 
   clickOnMonthButton(text: string): Promise<void> {
-    return this.page.locator(`${this.popupSelector} .dp-calendar-month:has-text("${text}")`).click();
+    return this.page
+      .locator(`${this.popupSelector} .dp-calendar-month:has-text("${text}")`)
+      .click();
   }
 
   clickOnMonthButtonInline(text: string): Promise<void> {
