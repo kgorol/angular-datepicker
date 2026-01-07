@@ -1,7 +1,7 @@
-import {CalendarMode} from '../common/types/calendar-mode';
-import {IDatePickerDirectiveConfig} from './date-picker-directive-config.model';
-import {IDpDayPickerApi} from './date-picker.api';
-import {DatePickerComponent} from './date-picker.component';
+import { CalendarMode } from '../common/types/calendar-mode';
+import { IDatePickerDirectiveConfig } from './date-picker-directive-config.model';
+import { IDpDayPickerApi } from './date-picker.api';
+import { DatePickerComponent } from './date-picker.component';
 import {
   ComponentFactoryResolver,
   Directive,
@@ -12,28 +12,29 @@ import {
   OnInit,
   Output,
   ViewContainerRef,
-  inject
+  inject,
 } from '@angular/core';
-import {NgControl} from '@angular/forms';
-import {INavEvent} from '../common/models/navigation-event.model';
-import {UtilsService} from '../common/services/utils/utils.service'
-import {CalendarValue} from '../common/types/calendar-value';
-import {ISelectionEvent} from '../common/types/selection-event.model';
-import {SingleCalendarValue} from '../common/types/single-calendar-value';
-import {Dayjs} from 'dayjs';
+import { NgControl } from '@angular/forms';
+import { INavEvent } from '../common/models/navigation-event.model';
+import { UtilsService } from '../common/services/utils/utils.service';
+import { CalendarValue } from '../common/types/calendar-value';
+import { ISelectionEvent } from '../common/types/selection-event.model';
+import { SingleCalendarValue } from '../common/types/single-calendar-value';
+import { Dayjs } from 'dayjs';
 
 @Directive({
-    exportAs: 'dpDayPicker',
-    selector: '[dpDayPicker]',
-    standalone: false
+  exportAs: 'dpDayPicker',
+  selector: '[dpDayPicker]',
+  standalone: false,
 })
 export class DatePickerDirective implements OnInit {
   readonly viewContainerRef = inject(ViewContainerRef);
   readonly elemRef = inject(ElementRef);
   readonly componentFactoryResolver = inject(ComponentFactoryResolver);
-  readonly formControl: NgControl | undefined = inject(NgControl, { optional: true });
+  readonly formControl: NgControl | undefined = inject(NgControl, {
+    optional: true,
+  });
   readonly utilsService = inject(UtilsService);
-
 
   @Output() open = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();
@@ -177,7 +178,10 @@ export class DatePickerDirective implements OnInit {
   }
 
   createDatePicker(): DatePickerComponent {
-    const factory = this.componentFactoryResolver.resolveComponentFactory(DatePickerComponent);
+    const factory =
+      this.componentFactoryResolver.resolveComponentFactory(
+        DatePickerComponent,
+      );
     return this.viewContainerRef.createComponent(factory).instance;
   }
 
@@ -190,7 +194,10 @@ export class DatePickerDirective implements OnInit {
 
     this.formControl.valueChanges.subscribe((value) => {
       if (value !== this.datePicker.inputElementValue) {
-        const strVal = this.utilsService.convertToString(value, this.datePicker.componentConfig.format);
+        const strVal = this.utilsService.convertToString(
+          value,
+          this.datePicker.componentConfig.format,
+        );
         this.datePicker.onViewDateChange(strVal);
       }
     });
@@ -199,7 +206,8 @@ export class DatePickerDirective implements OnInit {
 
     this.datePicker.registerOnChange((value, changedByInput) => {
       if (value) {
-        const isMultiselectEmpty = setup && Array.isArray(value) && !value.length;
+        const isMultiselectEmpty =
+          setup && Array.isArray(value) && !value.length;
 
         if (!isMultiselectEmpty && !changedByInput) {
           this.formControl.control.setValue(this.datePicker.inputElementValue);
@@ -210,7 +218,7 @@ export class DatePickerDirective implements OnInit {
 
       if (!setup) {
         this.formControl.control.markAsDirty({
-          onlySelf: true
+          onlySelf: true,
         });
       } else {
         setup = false;
@@ -218,7 +226,7 @@ export class DatePickerDirective implements OnInit {
 
       if (errors) {
         if (errors.hasOwnProperty('format')) {
-          const {given} = errors['format'];
+          const { given } = errors['format'];
           this.datePicker.inputElementValue = given;
           if (!changedByInput) {
             this.formControl.control.setValue(given);

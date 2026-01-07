@@ -1,21 +1,24 @@
-import {IDate} from '../common/models/date.model';
-import {UtilsService} from '../common/services/utils/utils.service';
-import {CalendarMode} from '../common/types/calendar-mode';
-import {ECalendarMode} from '../common/types/calendar-mode-enum';
-import {CalendarValue} from '../common/types/calendar-value';
-import {ECalendarValue} from '../common/types/calendar-value-enum';
-import {SingleCalendarValue} from '../common/types/single-calendar-value';
-import {IDayCalendarConfig} from '../day-calendar/day-calendar-config.model';
-import {DayCalendarComponent} from '../day-calendar/day-calendar.component';
-import {DayCalendarService} from '../day-calendar/day-calendar.service';
-import {IDayTimeCalendarConfig} from '../day-time-calendar/day-time-calendar-config.model';
-import {DayTimeCalendarService} from '../day-time-calendar/day-time-calendar.service';
-import {ITimeSelectConfig} from '../time-select/time-select-config.model';
-import {TimeSelectComponent} from '../time-select/time-select.component';
-import {TimeSelectService} from '../time-select/time-select.service';
-import {IDatePickerConfig, IDatePickerConfigInternal} from './date-picker-config.model';
-import {IDpDayPickerApi} from './date-picker.api';
-import {DatePickerService} from './date-picker.service';
+import { IDate } from '../common/models/date.model';
+import { UtilsService } from '../common/services/utils/utils.service';
+import { CalendarMode } from '../common/types/calendar-mode';
+import { ECalendarMode } from '../common/types/calendar-mode-enum';
+import { CalendarValue } from '../common/types/calendar-value';
+import { ECalendarValue } from '../common/types/calendar-value-enum';
+import { SingleCalendarValue } from '../common/types/single-calendar-value';
+import { IDayCalendarConfig } from '../day-calendar/day-calendar-config.model';
+import { DayCalendarComponent } from '../day-calendar/day-calendar.component';
+import { DayCalendarService } from '../day-calendar/day-calendar.service';
+import { IDayTimeCalendarConfig } from '../day-time-calendar/day-time-calendar-config.model';
+import { DayTimeCalendarService } from '../day-time-calendar/day-time-calendar.service';
+import { ITimeSelectConfig } from '../time-select/time-select-config.model';
+import { TimeSelectComponent } from '../time-select/time-select.component';
+import { TimeSelectService } from '../time-select/time-select.service';
+import {
+  IDatePickerConfig,
+  IDatePickerConfigInternal,
+} from './date-picker-config.model';
+import { IDpDayPickerApi } from './date-picker.api';
+import { DatePickerService } from './date-picker.service';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -34,7 +37,7 @@ import {
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
-  inject
+  inject,
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -42,48 +45,46 @@ import {
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
-  Validator
+  Validator,
 } from '@angular/forms';
 
-import {DateValidator} from '../common/types/validator.type';
-import {MonthCalendarComponent} from '../month-calendar/month-calendar.component';
-import {DayTimeCalendarComponent} from '../day-time-calendar/day-time-calendar.component';
-import {INavEvent} from '../common/models/navigation-event.model';
-import {SelectEvent} from '../common/types/selection-event.enum';
-import {ISelectionEvent} from '../common/types/selection-event.model';
-import {Dayjs, UnitType} from 'dayjs';
-import {dayjsRef} from '../common/dayjs/dayjs.ref';
-import {ConnectionPositionPair} from '@angular/cdk/overlay';
+import { DateValidator } from '../common/types/validator.type';
+import { MonthCalendarComponent } from '../month-calendar/month-calendar.component';
+import { DayTimeCalendarComponent } from '../day-time-calendar/day-time-calendar.component';
+import { INavEvent } from '../common/models/navigation-event.model';
+import { SelectEvent } from '../common/types/selection-event.enum';
+import { ISelectionEvent } from '../common/types/selection-event.model';
+import { Dayjs, UnitType } from 'dayjs';
+import { dayjsRef } from '../common/dayjs/dayjs.ref';
+import { ConnectionPositionPair } from '@angular/cdk/overlay';
 
 @Component({
-    selector: 'dp-date-picker',
-    templateUrl: 'date-picker.component.html',
-    styleUrls: ['date-picker.component.less'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        DatePickerService,
-        DayTimeCalendarService,
-        DayCalendarService,
-        TimeSelectService,
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => DatePickerComponent),
-            multi: true
-        },
-        {
-            provide: NG_VALIDATORS,
-            useExisting: forwardRef(() => DatePickerComponent),
-            multi: true
-        }
-    ],
-    standalone: false
+  selector: 'dp-date-picker',
+  templateUrl: 'date-picker.component.html',
+  styleUrls: ['date-picker.component.less'],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    DatePickerService,
+    DayTimeCalendarService,
+    DayCalendarService,
+    TimeSelectService,
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DatePickerComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => DatePickerComponent),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
-export class DatePickerComponent implements OnChanges,
-                                            OnInit,
-                                            ControlValueAccessor,
-                                            Validator,
-                                            OnDestroy {
+export class DatePickerComponent
+  implements OnChanges, OnInit, ControlValueAccessor, Validator, OnDestroy
+{
   private readonly dayPickerService = inject(DatePickerService);
   private readonly renderer = inject(Renderer2);
   private readonly utilsService = inject(UtilsService);
@@ -128,7 +129,7 @@ export class DatePickerComponent implements OnChanges,
   api: IDpDayPickerApi = {
     open: this.showCalendars.bind(this),
     close: this.hideCalendar.bind(this),
-    moveCalendarTo: this.moveCalendarTo.bind(this)
+    moveCalendarTo: this.moveCalendarTo.bind(this),
   };
   selectEvent = SelectEvent;
   origin: ElementRef | HTMLElement;
@@ -152,9 +153,13 @@ export class DatePickerComponent implements OnChanges,
 
   set selected(selected: Dayjs[]) {
     this._selected = selected;
-    this.inputElementValue = (<string[]>this.utilsService
-      .convertFromDayjsArray(this.componentConfig.format, selected, ECalendarValue.StringArr))
-      .join(' | ');
+    this.inputElementValue = (<string[]>(
+      this.utilsService.convertFromDayjsArray(
+        this.componentConfig.format,
+        selected,
+        ECalendarValue.StringArr,
+      )
+    )).join(' | ');
     const val = this.processOnChangeCallback(selected);
     this.onChangeCallback(val, false);
     this.onChange.emit(val);
@@ -212,8 +217,10 @@ export class DatePickerComponent implements OnChanges,
     this.inputValue = value;
 
     if (value || value === '') {
-      this.selected = this.utilsService
-        .convertToDayjsArray(value, this.componentConfig);
+      this.selected = this.utilsService.convertToDayjsArray(
+        value,
+        this.componentConfig,
+      );
       this.init();
     } else {
       this.selected = [];
@@ -226,15 +233,13 @@ export class DatePickerComponent implements OnChanges,
     this.onChangeCallback = fn;
   }
 
-  onChangeCallback(_: any, __: boolean) {
-  }
+  onChangeCallback(_: any, __: boolean) {}
 
   registerOnTouched(fn: any): void {
     this.onTouchedCallback = fn;
   }
 
-  onTouchedCallback() {
-  }
+  onTouchedCallback() {}
 
   validate(formControl: UntypedFormControl): ValidationErrors {
     return this.validateFn(formControl.value);
@@ -247,7 +252,11 @@ export class DatePickerComponent implements OnChanges,
       return this.utilsService.convertFromDayjsArray(
         this.componentConfig.format,
         selected,
-        this.componentConfig.returnedValueType || this.utilsService.getInputType(this.inputValue, this.componentConfig.allowMultiSelect)
+        this.componentConfig.returnedValueType ||
+          this.utilsService.getInputType(
+            this.inputValue,
+            this.componentConfig.allowMultiSelect,
+          ),
       );
     }
   }
@@ -258,8 +267,11 @@ export class DatePickerComponent implements OnChanges,
         minDate: this.minDate,
         maxDate: this.maxDate,
         minTime: this.minTime,
-        maxTime: this.maxTime
-      }, this.componentConfig.format, this.mode);
+        maxTime: this.maxTime,
+      },
+      this.componentConfig.format,
+      this.mode,
+    );
 
     this.onChangeCallback(this.processOnChangeCallback(this.selected), false);
   }
@@ -281,22 +293,37 @@ export class DatePickerComponent implements OnChanges,
   }
 
   init(): void {
-    this.componentConfig = this.dayPickerService.getConfig(this.config, this.mode);
+    this.componentConfig = this.dayPickerService.getConfig(
+      this.config,
+      this.mode,
+    );
     this.currentDateView = this.displayDate
-      ? this.utilsService.convertToDayjs(this.displayDate, this.componentConfig.format)
-      : this.utilsService
-        .getDefaultDisplayDate(
+      ? this.utilsService.convertToDayjs(
+          this.displayDate,
+          this.componentConfig.format,
+        )
+      : this.utilsService.getDefaultDisplayDate(
           this.currentDateView,
           this.selected,
           this.componentConfig.allowMultiSelect,
-          this.componentConfig.min
+          this.componentConfig.min,
         );
-    this.dayCalendarConfig = this.dayPickerService.getDayConfigService(this.componentConfig);
-    this.dayTimeCalendarConfig = this.dayPickerService.getDayTimeConfig(this.componentConfig);
-    this.timeSelectConfig = this.dayPickerService.getTimeConfig(this.componentConfig);
+    this.dayCalendarConfig = this.dayPickerService.getDayConfigService(
+      this.componentConfig,
+    );
+    this.dayTimeCalendarConfig = this.dayPickerService.getDayTimeConfig(
+      this.componentConfig,
+    );
+    this.timeSelectConfig = this.dayPickerService.getTimeConfig(
+      this.componentConfig,
+    );
     this.initValidators();
-    this.overlayPosition = this.dayPickerService.getOverlayPosition(this.componentConfig);
-    this.origin = this.utilsService.getNativeElement(this.componentConfig.inputElementContainer);
+    this.overlayPosition = this.dayPickerService.getOverlayPosition(
+      this.componentConfig,
+    );
+    this.origin = this.utilsService.getNativeElement(
+      this.componentConfig.inputElementContainer,
+    );
   }
 
   inputFocused(): void {
@@ -346,33 +373,51 @@ export class DatePickerComponent implements OnChanges,
   }
 
   onViewDateChange(value: CalendarValue): void {
-    const strVal = value ? this.utilsService.convertToString(value, this.componentConfig.format) : '';
-    if (this.dayPickerService.isValidInputDateValue(strVal, this.componentConfig)) {
-      this.selected = this.dayPickerService.convertInputValueToDayjsArray(strVal, this.componentConfig);
+    const strVal = value
+      ? this.utilsService.convertToString(value, this.componentConfig.format)
+      : '';
+    if (
+      this.dayPickerService.isValidInputDateValue(strVal, this.componentConfig)
+    ) {
+      this.selected = this.dayPickerService.convertInputValueToDayjsArray(
+        strVal,
+        this.componentConfig,
+      );
       this.currentDateView = this.selected.length
         ? this.utilsService.getDefaultDisplayDate(
-          null,
-          this.selected,
-          this.componentConfig.allowMultiSelect,
-          this.componentConfig.min
-        )
+            null,
+            this.selected,
+            this.componentConfig.allowMultiSelect,
+            this.componentConfig.min,
+          )
         : this.currentDateView;
 
       this.onSelect.emit({
         date: strVal,
         type: SelectEvent.INPUT,
-        granularity: null
-      })
+        granularity: null,
+      });
     } else {
-      this._selected = this.utilsService
-        .getValidDayjsArray(strVal, this.componentConfig.format);
+      this._selected = this.utilsService.getValidDayjsArray(
+        strVal,
+        this.componentConfig.format,
+      );
       this.onChangeCallback(this.processOnChangeCallback(strVal), true);
     }
   }
 
-  dateSelected(date: IDate, granularity: UnitType, type: SelectEvent, ignoreClose?: boolean): void {
-    this.selected = this.utilsService
-      .updateSelected(this.componentConfig.allowMultiSelect, this.selected, date, granularity);
+  dateSelected(
+    date: IDate,
+    granularity: UnitType,
+    type: SelectEvent,
+    ignoreClose?: boolean,
+  ): void {
+    this.selected = this.utilsService.updateSelected(
+      this.componentConfig.allowMultiSelect,
+      this.selected,
+      date,
+      granularity,
+    );
     if (!ignoreClose) {
       this.onDateClick();
     }
@@ -380,28 +425,34 @@ export class DatePickerComponent implements OnChanges,
     this.onSelect.emit({
       date: date.date,
       granularity,
-      type
+      type,
     });
   }
 
   onDateClick(): void {
     if (this.componentConfig.closeOnSelect) {
-      setTimeout(this.hideCalendar.bind(this), this.componentConfig.closeOnSelectDelay);
+      setTimeout(
+        this.hideCalendar.bind(this),
+        this.componentConfig.closeOnSelectDelay,
+      );
     }
   }
 
   onKeyPress(event: KeyboardEvent): void {
     switch (event.key) {
-      case ('Escape'):
-      case ('Esc'):
-      case ('Tab'):
+      case 'Escape':
+      case 'Esc':
+      case 'Tab':
         this.hideCalendar();
         break;
     }
   }
 
   moveCalendarTo(date: SingleCalendarValue): void {
-    this.currentDateView = this.utilsService.convertToDayjs(date, this.componentConfig.format);
+    this.currentDateView = this.utilsService.convertToDayjs(
+      date,
+      this.componentConfig.format,
+    );
   }
 
   onLeftNavClick(change: INavEvent): void {
@@ -418,7 +469,7 @@ export class DatePickerComponent implements OnChanges,
     this.globalListenersUnlisteners.push(
       this.renderer.listen(document, 'keydown', (e: KeyboardEvent) => {
         this.onKeyPress(e);
-      })
+      }),
     );
   }
 
@@ -428,7 +479,7 @@ export class DatePickerComponent implements OnChanges,
   }
 
   ngOnDestroy(): void {
-    this.handleInnerElementClickUnlisteners.forEach(ul => ul());
+    this.handleInnerElementClickUnlisteners.forEach((ul) => ul());
 
     if (this.appendToElement) {
       this.appendToElement.removeChild(this.calendarWrapper);
@@ -437,6 +488,6 @@ export class DatePickerComponent implements OnChanges,
 
   goToCurrent(): void {
     this.currentDateView = dayjsRef();
-    this.onGoToCurrent.emit()
+    this.onGoToCurrent.emit();
   }
 }

@@ -1,11 +1,11 @@
-import {DemoPage} from './app.po';
-import {expect, Page, test} from '@playwright/test';
+import { DemoPage } from './app.po';
+import { expect, Page, test } from '@playwright/test';
 
 test.describe('dpDayPicker timePicker', () => {
   let po: DemoPage;
   let page: Page;
 
-  test.beforeAll(async ({browser}) => {
+  test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
   });
 
@@ -21,7 +21,9 @@ test.describe('dpDayPicker timePicker', () => {
     await po.setText(po.minTimeValidationPickerInput(), '10:00:00');
     await po.setText(po.timePickerInput(), '09:00:00');
     await po.clickOnBody();
-    expect(await po.minDateValidationMsg().textContent()).toEqual('minDate invalid');
+    expect(await po.minDateValidationMsg().textContent()).toEqual(
+      'minDate invalid',
+    );
     await po.setText(po.minTimeValidationPickerInput(), '08:07:06');
     await po.clickOnBody();
     await expect(po.minDateValidationMsg()).toBeHidden();
@@ -37,7 +39,9 @@ test.describe('dpDayPicker timePicker', () => {
     await po.timePickerInput().clear();
     await po.setText(po.timePickerInput(), '09:00:00');
     await po.clickOnBody();
-    expect(await po.maxDateValidationMsg().textContent()).toEqual('maxDate invalid');
+    expect(await po.maxDateValidationMsg().textContent()).toEqual(
+      'maxDate invalid',
+    );
     await po.maxTimeValidationPickerInput().clear();
     await po.setText(po.maxTimeValidationPickerInput(), '10:11:12');
     await expect(po.maxDateValidationMsg()).toBeHidden();

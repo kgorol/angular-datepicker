@@ -1,12 +1,12 @@
-import {DemoPage} from './app.po';
-import {expect, Page, test} from '@playwright/test';
+import { DemoPage } from './app.po';
+import { expect, Page, test } from '@playwright/test';
 import dayjs from 'dayjs';
 
 test.describe('dpDayPicker directive', () => {
   let po: DemoPage;
   let page: Page;
 
-  test.beforeAll(async ({browser}) => {
+  test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
   });
 
@@ -29,20 +29,27 @@ test.describe('dpDayPicker directive', () => {
     await po.clickOnBody();
 
     await po.dayDirectiveInput().click();
-    await expect(await po.dayCalendarNavHeaderBtn().textContent())
-      .toEqual(dayjs().subtract(1, 'month').format('MMM, YYYY'));
+    await expect(await po.dayCalendarNavHeaderBtn().textContent()).toEqual(
+      dayjs().subtract(1, 'month').format('MMM, YYYY'),
+    );
   });
 
   test('should check that the theme is added and removed', async () => {
     await po.themeOnRadio().click();
     await po.dayDirectiveInput().click();
-    await expect(await po.datePickerPopup().getAttribute('class')).toContain('dp-material');
+    await expect(await po.datePickerPopup().getAttribute('class')).toContain(
+      'dp-material',
+    );
     await po.themeOffRadio().click();
     await po.dayDirectiveInput().click();
-    await expect(await po.datePickerPopup().getAttribute('class')).not.toContain('dp-material');
+    await expect(
+      await po.datePickerPopup().getAttribute('class'),
+    ).not.toContain('dp-material');
     await po.themeOnRadio().click();
     await po.dayDirectiveInput().click();
-    await expect(await po.datePickerPopup().getAttribute('class')).toContain('dp-material');
+    await expect(await po.datePickerPopup().getAttribute('class')).toContain(
+      'dp-material',
+    );
   });
 
   test('should check that the onOpenDelay is working', async () => {
@@ -58,7 +65,7 @@ test.describe('dpDayPicker directive', () => {
   });
 
   test('should allow input to be modified from beginning', async () => {
-    await po.setText(po.dayDirectiveInput(), '10-04-2017')
+    await po.setText(po.dayDirectiveInput(), '10-04-2017');
     await po.dayDirectiveInput().focus();
 
     for (let i = 0; i < 11; i++) {
@@ -71,6 +78,8 @@ test.describe('dpDayPicker directive', () => {
     await expect(po.dayDirectiveInput()).toHaveValue('20-04-2017');
     await expect(await po.selectedDays().count()).toBe(1);
     await expect(await po.selectedDays().first().textContent()).toBe('20');
-    await expect(await po.dayCalendarNavHeaderBtn().textContent()).toBe('Apr, 2017');
+    await expect(await po.dayCalendarNavHeaderBtn().textContent()).toBe(
+      'Apr, 2017',
+    );
   });
 });

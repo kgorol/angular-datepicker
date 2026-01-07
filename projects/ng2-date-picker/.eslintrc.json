@@ -1,18 +1,11 @@
 {
   "extends": "../../.eslintrc.json",
-  "ignorePatterns": [
-    "!**/*"
-  ],
+  "ignorePatterns": ["!**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.lib.json",
-          "tsconfig.spec.json"
-        ],
+        "project": ["tsconfig.lib.json", "tsconfig.spec.json"],
         "tsconfigRootDir": "projects/ng2-date-picker",
         "createDefaultProgram": true
       },
@@ -36,9 +29,7 @@
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
+      "files": ["*.html"],
       "rules": {}
     }
   ]

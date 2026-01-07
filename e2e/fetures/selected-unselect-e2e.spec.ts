@@ -16,7 +16,11 @@ test.describe('dpDayPicker timePicker', () => {
   });
 
   test('should make sure unSelectOnClick feature works as expected for day calendar', async () => {
-    const dayRunner = async (menuItem: Locator, input: Locator, isPicker: boolean) => {
+    const dayRunner = async (
+      menuItem: Locator,
+      input: Locator,
+      isPicker: boolean,
+    ) => {
       const date = dayjs().date(15);
       const dayClick = async () => {
         if (isPicker) {
@@ -74,7 +78,11 @@ test.describe('dpDayPicker timePicker', () => {
   });
 
   test('should make sure unSelectOnClick feature works as expected for month calendar', async () => {
-    const monthRunner = async (menuItem: Locator, input: Locator, isPicker: boolean) => {
+    const monthRunner = async (
+      menuItem: Locator,
+      input: Locator,
+      isPicker: boolean,
+    ) => {
       const date = dayjs();
       const monthClick = async () => {
         if (isPicker) {

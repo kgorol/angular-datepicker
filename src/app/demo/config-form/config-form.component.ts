@@ -1,13 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {UntypedFormControl} from '@angular/forms';
-import {ECalendarValue, IDatePickerConfig} from '../../../../projects/ng2-date-picker/src/public-api';
-import dayjs, {Dayjs} from 'dayjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UntypedFormControl } from '@angular/forms';
+import {
+  ECalendarValue,
+  IDatePickerConfig,
+} from '../../../../projects/ng2-date-picker/src/public-api';
+import dayjs, { Dayjs } from 'dayjs';
 
 const GLOBAL_OPTION_KEYS = [
   'theme',
   'locale',
   'returnedValueType',
-  'displayDate'
+  'displayDate',
 ];
 const PICKER_OPTION_KEYS = [
   'apiclose',
@@ -25,7 +28,7 @@ const PICKER_OPTION_KEYS = [
   'required',
   'hideInputContainer',
   'hideOnOutsideClick',
-  'closeOnEnter'
+  'closeOnEnter',
 ];
 const DAY_PICKER_DIRECTIVE_OPTION_KEYS = [
   'allowMultiSelect',
@@ -33,18 +36,11 @@ const DAY_PICKER_DIRECTIVE_OPTION_KEYS = [
   'closeOnSelectDelay',
   'showGoToCurrent',
   'moveCalendarTo',
-  ...PICKER_OPTION_KEYS
+  ...PICKER_OPTION_KEYS,
 ];
-const DAY_PICKER_OPTION_KEYS = [
-  ...DAY_PICKER_DIRECTIVE_OPTION_KEYS
-];
-const DAY_TIME_PICKER_OPTION_KEYS = [
-  'moveCalendarTo',
-  ...PICKER_OPTION_KEYS
-];
-const TIME_PICKER_OPTION_KEYS = [
-  ...PICKER_OPTION_KEYS
-];
+const DAY_PICKER_OPTION_KEYS = [...DAY_PICKER_DIRECTIVE_OPTION_KEYS];
+const DAY_TIME_PICKER_OPTION_KEYS = ['moveCalendarTo', ...PICKER_OPTION_KEYS];
+const TIME_PICKER_OPTION_KEYS = [...PICKER_OPTION_KEYS];
 const MONTH_CALENDAR_OPTION_KEYS = [
   'minValidation',
   'maxValidation',
@@ -59,7 +55,7 @@ const MONTH_CALENDAR_OPTION_KEYS = [
   'unSelectOnClick',
   'moveCalendarTo',
   'numOfMonthRows',
-  ...GLOBAL_OPTION_KEYS
+  ...GLOBAL_OPTION_KEYS,
 ];
 const DAY_CALENDAR_OPTION_KEYS = new Set([
   'firstDayOfWeek',
@@ -77,7 +73,7 @@ const DAY_CALENDAR_OPTION_KEYS = new Set([
   'showGoToCurrent',
   'unSelectOnClick',
   'moveCalendarTo',
-  ...MONTH_CALENDAR_OPTION_KEYS
+  ...MONTH_CALENDAR_OPTION_KEYS,
 ]);
 const TIME_SELECT_SHARED_OPTION_KEYS = [
   'hours12Format',
@@ -90,65 +86,168 @@ const TIME_SELECT_SHARED_OPTION_KEYS = [
   'showSeconds',
   'showTwentyFourHours',
   'timeSeparator',
-  ...GLOBAL_OPTION_KEYS
+  ...GLOBAL_OPTION_KEYS,
 ];
 const TIME_SELECT_OPTION_KEYS = [
   'maxTime',
   'maxTimeValidation',
   'minTime',
   'minTimeValidation',
-  ...TIME_SELECT_SHARED_OPTION_KEYS
+  ...TIME_SELECT_SHARED_OPTION_KEYS,
 ];
 const DAY_TIME_CALENDAR_OPTION_KEYS = [
   ...DAY_TIME_PICKER_OPTION_KEYS,
   ...DAY_CALENDAR_OPTION_KEYS,
-  ...TIME_SELECT_SHARED_OPTION_KEYS
+  ...TIME_SELECT_SHARED_OPTION_KEYS,
 ];
 
 @Component({
-    selector: 'dp-config-form',
-    templateUrl: './config-form.component.html',
-    styleUrls: ['./config-form.component.less'],
-    standalone: false
+  selector: 'dp-config-form',
+  templateUrl: './config-form.component.html',
+  styleUrls: ['./config-form.component.less'],
+  standalone: false,
 })
 export class ConfigFormComponent implements OnInit {
-
   readonly DAYS = ['su', 'mo', 'tu', 'we', 'th', 'fr', 'sa'];
   readonly LANGS = [
-    'en', 'af', 'ar-dz', 'ar-kw', 'ar-ly',
-    'ar-ma', 'ar-sa', 'ar-tn', 'ar', 'az', 'be', 'bg', 'bn', 'bo',
-    'br', 'bs', 'ca', 'cs', 'cv', 'cy', 'da', 'de-at', 'de-ch',
-    'de', 'dv', 'el', 'en-au', 'en-ca', 'en-gb', 'en-ie', 'en-nz',
-    'eo', 'es-do', 'es', 'et', 'eu', 'fa', 'fi', 'fo', 'fr-ca',
-    'fr-ch', 'fr', 'fy', 'gd', 'gl', 'gom-latn', 'he', 'hi', 'hr',
-    'hu', 'hy-am', 'id', 'is', 'it', 'ja', 'jv', 'ka', 'kk', 'km', 'kn',
-    'ko', 'ky', 'lb', 'lo', 'lt', 'lv', 'me', 'mi', 'mk', 'ml', 'mr', 'ms-my',
-    'ms', 'my', 'nb', 'ne', 'nl-be', 'nl', 'nn', 'pa-in', 'pl', 'pt-br',
-    'pt', 'ro', 'ru', 'sd', 'se', 'si', 'sk', 'sl', 'sq', 'sr-cyrl', 'sr',
-    'ss', 'sv', 'sw', 'ta', 'te', 'tet', 'th', 'tl-ph', 'tlh', 'tr', 'tzl',
-    'tzm-latn', 'tzm', 'uk', 'ur', 'uz-latn', 'uz', 'vi', 'x-pseudo', 'yo', 'zh-cn', 'zh-hk', 'zh-tw'
+    'en',
+    'af',
+    'ar-dz',
+    'ar-kw',
+    'ar-ly',
+    'ar-ma',
+    'ar-sa',
+    'ar-tn',
+    'ar',
+    'az',
+    'be',
+    'bg',
+    'bn',
+    'bo',
+    'br',
+    'bs',
+    'ca',
+    'cs',
+    'cv',
+    'cy',
+    'da',
+    'de-at',
+    'de-ch',
+    'de',
+    'dv',
+    'el',
+    'en-au',
+    'en-ca',
+    'en-gb',
+    'en-ie',
+    'en-nz',
+    'eo',
+    'es-do',
+    'es',
+    'et',
+    'eu',
+    'fa',
+    'fi',
+    'fo',
+    'fr-ca',
+    'fr-ch',
+    'fr',
+    'fy',
+    'gd',
+    'gl',
+    'gom-latn',
+    'he',
+    'hi',
+    'hr',
+    'hu',
+    'hy-am',
+    'id',
+    'is',
+    'it',
+    'ja',
+    'jv',
+    'ka',
+    'kk',
+    'km',
+    'kn',
+    'ko',
+    'ky',
+    'lb',
+    'lo',
+    'lt',
+    'lv',
+    'me',
+    'mi',
+    'mk',
+    'ml',
+    'mr',
+    'ms-my',
+    'ms',
+    'my',
+    'nb',
+    'ne',
+    'nl-be',
+    'nl',
+    'nn',
+    'pa-in',
+    'pl',
+    'pt-br',
+    'pt',
+    'ro',
+    'ru',
+    'sd',
+    'se',
+    'si',
+    'sk',
+    'sl',
+    'sq',
+    'sr-cyrl',
+    'sr',
+    'ss',
+    'sv',
+    'sw',
+    'ta',
+    'te',
+    'tet',
+    'th',
+    'tl-ph',
+    'tlh',
+    'tr',
+    'tzl',
+    'tzm-latn',
+    'tzm',
+    'uk',
+    'ur',
+    'uz-latn',
+    'uz',
+    'vi',
+    'x-pseudo',
+    'yo',
+    'zh-cn',
+    'zh-hk',
+    'zh-tw',
   ];
-  readonly dateTypes: { name: string, value: ECalendarValue }[] = [
+  readonly dateTypes: { name: string; value: ECalendarValue }[] = [
     {
       name: 'Guess',
-      value: null
+      value: null,
     },
     {
       name: ECalendarValue[ECalendarValue.Dayjs],
-      value: ECalendarValue.Dayjs
+      value: ECalendarValue.Dayjs,
     },
     {
       name: ECalendarValue[ECalendarValue.DayjsArr],
-      value: ECalendarValue.DayjsArr
+      value: ECalendarValue.DayjsArr,
     },
     {
       name: ECalendarValue[ECalendarValue.String],
-      value: ECalendarValue.String
+      value: ECalendarValue.String,
     },
     {
       name: ECalendarValue[ECalendarValue.StringArr],
-      value: ECalendarValue.StringArr
-    }
+      value: ECalendarValue.StringArr,
+    },
   ];
 
   localFormat: string;
@@ -228,9 +327,13 @@ export class ConfigFormComponent implements OnInit {
   numOfMonthRows: UntypedFormControl;
 
   ngOnInit() {
-    this.localFormat = ConfigFormComponent.getDefaultFormatByMode(this.pickerMode);
+    this.localFormat = ConfigFormComponent.getDefaultFormatByMode(
+      this.pickerMode,
+    );
 
-    this.format = new UntypedFormControl(ConfigFormComponent.getDefaultFormatByMode(this.pickerMode));
+    this.format = new UntypedFormControl(
+      ConfigFormComponent.getDefaultFormatByMode(this.pickerMode),
+    );
     this.locale = new UntypedFormControl(this.localeVal);
     this.firstDayOfWeek = new UntypedFormControl(this.config.firstDayOfWeek);
     this.monthFormat = new UntypedFormControl(this.config.monthFormat);
@@ -238,9 +341,13 @@ export class ConfigFormComponent implements OnInit {
     this.max = new UntypedFormControl(this.config.max);
     this.minTime = new UntypedFormControl(this.config.minTime);
     this.maxTime = new UntypedFormControl(this.config.maxTime);
-    this.allowMultiSelect = new UntypedFormControl(this.config.allowMultiSelect);
+    this.allowMultiSelect = new UntypedFormControl(
+      this.config.allowMultiSelect,
+    );
     this.closeOnSelect = new UntypedFormControl(this.config.closeOnSelect);
-    this.closeOnSelectDelay = new UntypedFormControl(this.config.closeOnSelectDelay);
+    this.closeOnSelectDelay = new UntypedFormControl(
+      this.config.closeOnSelectDelay,
+    );
     this.openOnFocus = new UntypedFormControl(this.config.openOnFocus);
     this.openOnClick = new UntypedFormControl(this.config.openOnClick);
     this.onOpenDelay = new UntypedFormControl(this.config.onOpenDelay);
@@ -248,13 +355,21 @@ export class ConfigFormComponent implements OnInit {
     this.disableKeypress = new UntypedFormControl(this.config.disableKeypress);
     this.drops = new UntypedFormControl(this.config.drops);
     this.opens = new UntypedFormControl(this.config.opens);
-    this.hideInputContainer = new UntypedFormControl(this.config.hideInputContainer);
-    this.showNearMonthDays = new UntypedFormControl(this.config.showNearMonthDays);
+    this.hideInputContainer = new UntypedFormControl(
+      this.config.hideInputContainer,
+    );
+    this.showNearMonthDays = new UntypedFormControl(
+      this.config.showNearMonthDays,
+    );
     this.showWeekNumbers = new UntypedFormControl(this.config.showWeekNumbers);
-    this.enableMonthSelector = new UntypedFormControl(this.config.enableMonthSelector);
+    this.enableMonthSelector = new UntypedFormControl(
+      this.config.enableMonthSelector,
+    );
     this.yearFormat = new UntypedFormControl(this.config.yearFormat);
     this.showGoToCurrent = new UntypedFormControl(this.config.showGoToCurrent);
-    this.hideOnOutsideClick = new UntypedFormControl(this.config.hideOnOutsideClick);
+    this.hideOnOutsideClick = new UntypedFormControl(
+      this.config.hideOnOutsideClick,
+    );
     this.unSelectOnClick = new UntypedFormControl(this.config.unSelectOnClick);
     this.dayBtnFormat = new UntypedFormControl(this.config.dayBtnFormat);
     this.monthBtnFormat = new UntypedFormControl(this.config.monthBtnFormat);
@@ -266,11 +381,19 @@ export class ConfigFormComponent implements OnInit {
     this.secondsFormat = new UntypedFormControl(this.config.secondsFormat);
     this.secondsInterval = new UntypedFormControl(this.config.secondsInterval);
     this.showSeconds = new UntypedFormControl(this.config.showSeconds);
-    this.showTwentyFourHours = new UntypedFormControl(this.config.showTwentyFourHours);
+    this.showTwentyFourHours = new UntypedFormControl(
+      this.config.showTwentyFourHours,
+    );
     this.timeSeparator = new UntypedFormControl(this.config.timeSeparator);
-    this.showMultipleYearsNavigation = new UntypedFormControl(this.config.showMultipleYearsNavigation);
-    this.multipleYearsNavigateBy = new UntypedFormControl(this.config.multipleYearsNavigateBy);
-    this.returnedValueType = new UntypedFormControl(this.config.returnedValueType);
+    this.showMultipleYearsNavigation = new UntypedFormControl(
+      this.config.showMultipleYearsNavigation,
+    );
+    this.multipleYearsNavigateBy = new UntypedFormControl(
+      this.config.multipleYearsNavigateBy,
+    );
+    this.returnedValueType = new UntypedFormControl(
+      this.config.returnedValueType,
+    );
     this.closeOnEnter = new UntypedFormControl(this.config.closeOnEnter);
     this.numOfMonthRows = new UntypedFormControl(this.config.numOfMonthRows);
     this.initListeners();
@@ -279,54 +402,44 @@ export class ConfigFormComponent implements OnInit {
   isValidConfig(key: string): boolean {
     switch (this.pickerMode) {
       case 'dayInline':
-        return [
-          ...DAY_CALENDAR_OPTION_KEYS
-        ].includes(key);
+        return [...DAY_CALENDAR_OPTION_KEYS].includes(key);
       case 'monthInline':
-        return [
-          ...MONTH_CALENDAR_OPTION_KEYS
-        ].includes(key);
+        return [...MONTH_CALENDAR_OPTION_KEYS].includes(key);
       case 'timeInline':
-        return [
-          ...TIME_SELECT_OPTION_KEYS
-        ].includes(key);
+        return [...TIME_SELECT_OPTION_KEYS].includes(key);
       case 'daytimeInline':
-        return [
-          ...DAY_TIME_CALENDAR_OPTION_KEYS
-        ].includes(key);
+        return [...DAY_TIME_CALENDAR_OPTION_KEYS].includes(key);
       case 'dayPicker':
         return [
           ...DAY_PICKER_OPTION_KEYS,
-          ...DAY_CALENDAR_OPTION_KEYS
+          ...DAY_CALENDAR_OPTION_KEYS,
         ].includes(key);
       case 'dayDirective':
       case 'dayDirectiveReactiveMenu':
         return [
           ...DAY_PICKER_DIRECTIVE_OPTION_KEYS,
-          ...DAY_CALENDAR_OPTION_KEYS
+          ...DAY_CALENDAR_OPTION_KEYS,
         ].includes(key);
       case 'monthPicker':
         return [
           ...DAY_PICKER_OPTION_KEYS,
-          ...MONTH_CALENDAR_OPTION_KEYS
+          ...MONTH_CALENDAR_OPTION_KEYS,
         ].includes(key);
       case 'monthDirective':
         return [
           ...DAY_PICKER_DIRECTIVE_OPTION_KEYS,
-          ...MONTH_CALENDAR_OPTION_KEYS
+          ...MONTH_CALENDAR_OPTION_KEYS,
         ].includes(key);
       case 'timePicker':
       case 'timeDirective':
         return [
           ...TIME_PICKER_OPTION_KEYS,
-          ...TIME_SELECT_OPTION_KEYS
+          ...TIME_SELECT_OPTION_KEYS,
         ].includes(key);
       case 'daytime':
       case 'daytimePicker':
       case 'daytimeDirective':
-        return [
-          ...DAY_TIME_CALENDAR_OPTION_KEYS
-        ].includes(key);
+        return [...DAY_TIME_CALENDAR_OPTION_KEYS].includes(key);
       default:
         return true;
     }
@@ -379,253 +492,253 @@ export class ConfigFormComponent implements OnInit {
 
     this.format.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        format: val
+        format: val,
       });
     });
 
     this.firstDayOfWeek.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        firstDayOfWeek: val
+        firstDayOfWeek: val,
       });
     });
 
     this.monthFormat.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        monthFormat: val
+        monthFormat: val,
       });
     });
 
     this.min.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        min: val
+        min: val,
       });
     });
 
     this.max.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        max: val
+        max: val,
       });
     });
 
     this.minTime.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        minTime: val
+        minTime: val,
       });
     });
 
     this.maxTime.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        maxTime: val
+        maxTime: val,
       });
     });
 
     this.allowMultiSelect.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        allowMultiSelect: val
+        allowMultiSelect: val,
       });
     });
 
     this.closeOnSelect.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        closeOnSelect: val
+        closeOnSelect: val,
       });
     });
 
     this.closeOnSelectDelay.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        closeOnSelectDelay: val
+        closeOnSelectDelay: val,
       });
     });
 
     this.openOnFocus.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        openOnFocus: val
+        openOnFocus: val,
       });
     });
 
     this.openOnClick.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        openOnClick: val
+        openOnClick: val,
       });
     });
 
     this.onOpenDelay.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        onOpenDelay: val
+        onOpenDelay: val,
       });
     });
 
     this.weekDayFormat.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        weekDayFormat: val
+        weekDayFormat: val,
       });
     });
 
     this.disableKeypress.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        disableKeypress: val
+        disableKeypress: val,
       });
     });
 
     this.drops.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        drops: val
+        drops: val,
       });
     });
 
     this.opens.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        opens: val
+        opens: val,
       });
     });
 
     this.hideInputContainer.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        hideInputContainer: val
+        hideInputContainer: val,
       });
     });
 
     this.showNearMonthDays.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        showNearMonthDays: val
+        showNearMonthDays: val,
       });
     });
 
     this.showWeekNumbers.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        showWeekNumbers: val
+        showWeekNumbers: val,
       });
     });
 
     this.enableMonthSelector.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        enableMonthSelector: val
+        enableMonthSelector: val,
       });
     });
 
     this.yearFormat.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        yearFormat: val
+        yearFormat: val,
       });
     });
 
     this.showGoToCurrent.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        showGoToCurrent: val
+        showGoToCurrent: val,
       });
     });
 
     this.hideOnOutsideClick.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        hideOnOutsideClick: val
+        hideOnOutsideClick: val,
       });
     });
 
     this.unSelectOnClick.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        unSelectOnClick: val
+        unSelectOnClick: val,
       });
     });
 
     this.dayBtnFormat.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        dayBtnFormat: val
+        dayBtnFormat: val,
       });
     });
 
     this.monthBtnFormat.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        monthBtnFormat: val
+        monthBtnFormat: val,
       });
     });
 
     this.hours12Format.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        hours12Format: val
+        hours12Format: val,
       });
     });
 
     this.hours24Format.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        hours24Format: val
+        hours24Format: val,
       });
     });
 
     this.meridiemFormat.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        meridiemFormat: val
+        meridiemFormat: val,
       });
     });
 
     this.minutesFormat.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        minutesFormat: val
+        minutesFormat: val,
       });
     });
 
     this.minutesInterval.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        minutesInterval: val
+        minutesInterval: val,
       });
     });
 
     this.secondsFormat.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        secondsFormat: val
+        secondsFormat: val,
       });
     });
 
     this.secondsInterval.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        secondsInterval: val
+        secondsInterval: val,
       });
     });
 
     this.showSeconds.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        showSeconds: val
+        showSeconds: val,
       });
     });
 
     this.showTwentyFourHours.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        showTwentyFourHours: val
+        showTwentyFourHours: val,
       });
     });
 
     this.timeSeparator.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        timeSeparator: val
+        timeSeparator: val,
       });
     });
 
     this.showMultipleYearsNavigation.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        showMultipleYearsNavigation: val
+        showMultipleYearsNavigation: val,
       });
     });
 
     this.multipleYearsNavigateBy.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        multipleYearsNavigateBy: val
+        multipleYearsNavigateBy: val,
       });
     });
 
     this.returnedValueType.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        returnedValueType: val
+        returnedValueType: val,
       });
     });
 
     this.closeOnEnter.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        closeOnEnter: val
+        closeOnEnter: val,
       });
     });
 
     this.numOfMonthRows.valueChanges.subscribe((val) => {
       this.onConfigChange.emit({
-        numOfMonthRows: val
+        numOfMonthRows: val,
       });
     });
   }
